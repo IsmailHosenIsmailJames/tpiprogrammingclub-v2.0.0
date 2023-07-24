@@ -1,0 +1,222 @@
+[33mcommit 6ebd73157a4c83ae318e3a928c053a0cb2d24054[m[33m ([m[1;36mHEAD[m[33m)[m
+Author: MD. Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Mon Jul 24 15:10:02 2023 +0600
+
+    BackGround added Grediant
+
+[33mcommit 28dcfe236db058ee239458b936da3f93d4756904[m
+Author: MD. Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Wed May 17 22:49:19 2023 +0600
+
+    some error are fixed
+
+[33mcommit ea452c8c4ba2751b727abe9eea0946c6ee645e90[m
+Author: MD. Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Wed May 17 18:11:52 2023 +0600
+
+    Error fixed when approve a post. search option
+
+[33mcommit cbba84b0423ec7014addea3bea6f8527e7f0c6d2[m
+Author: MD. Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Wed May 17 14:05:54 2023 +0600
+
+    nothing Changed
+
+[33mcommit 1591fc7b799c76b6bd354d1916297d451d99df66[m
+Author: MD. Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Wed May 17 12:37:49 2023 +0600
+
+    Now User can update their profile photo
+
+[33mcommit 32227f7f1db80a710b0a1aa8daa142e9a6038e99[m
+Author: MD. Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Wed May 17 10:45:25 2023 +0600
+
+    Now drawer has addded everywhere
+    
+    Now we can navigate drawer form any pages and go any pages though dreawer functionality
+
+[33mcommit 1e20b92174a6907c9fe18c557965fa274e480399[m
+Author: MD. Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Tue May 16 23:39:38 2023 +0600
+
+    streamBuillder removed from home pages
+
+[33mcommit 327fea36f88f71832f83a2a0359b399e86ed929b[m
+Author: MD. Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Tue May 16 22:50:32 2023 +0600
+
+    Successfully Url Navigation implemented.
+    Now we can navigate diffenent screens using url. also now we can share link to friends.
+
+[33mcommit c675a75e85dcd60c7e9b172987937cb629c2f4c3[m
+Author: MD. Ismail Hosen Ismail James <md.ismailhosenismailjames@gmail.com>
+Date:   Thu May 11 22:30:11 2023 +0600
+
+    In Drower I have added Menus and Submenus
+    on click menu it shows it's Submenus with animation. If another menu is open then first of all it will close the Menus first with animation then will open another menu with animation. This so fixiable.
+
+[33mcommit e6338d5990c9ad7cabc481b1b8c8b7fe1bf56ff3[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Thu Apr 6 01:12:11 2023 +0600
+
+    delete file will move achived be restore
+
+[33mcommit edf8c7b7541756db438ff15bd2f944c3cc677ebc[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Mon Mar 27 07:11:29 2023 +0600
+
+    admin approval need to post
+
+[33mcommit aae13dee218199fb13f2178a4d77fe71f5b9f814[m
+Author: Ismail Hossain <99122172+IsmailHosenIsmailJames@users.noreply.github.com>
+Date:   Thu Mar 16 08:46:45 2023 +0600
+
+    Update README.md
+
+[33mcommit 3f068a6eafceccb1266709184e20574eb3d8e99c[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Thu Mar 16 07:38:34 2023 +0600
+
+    ChatGPT added. Big Update for Android
+    chatgpt added
+    flutter syntext higligter removed,
+    custom code theme has build,
+    comment section graphics upgraded and removed unusefull codes
+
+[33mcommit 5e49ad9944c5533e2cd551f58af8a7360ea6efd9[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Sat Mar 11 14:18:36 2023 +0600
+
+    Big Update. Now modify_post option added
+    Graphics search option Update
+
+[33mcommit 4ba380fcde0d053997e8501fd72853a1378dd71c[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Wed Mar 8 15:53:13 2023 +0600
+
+    Big Update, now web render is HTML.Support web img
+    created toested popup meassage and any code run on web
+
+[33mcommit 6ec5df091a4187ac552d9ca05c7c3af5fc7a1b65[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Tue Mar 7 20:29:52 2023 +0600
+
+    list of content are reordered and icons added
+
+[33mcommit 2e303c77b1822ac5fe38a04a4baa69b1efdf7b9b[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Tue Mar 7 19:22:50 2023 +0600
+
+    problem Navigation editor fixed and moved widget
+
+[33mcommit 7c0948297174d1727e2dd4d73f70a09aca9ba646[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Tue Mar 7 14:59:55 2023 +0600
+
+    Forget password, Reset password Option added
+
+[33mcommit 8c49a54478abbad4e21d6f80b24e779ae977dbc5[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Mon Mar 6 15:57:27 2023 +0600
+
+    email verification option is added
+    and aplication for became a contributer had removed
+
+[33mcommit 8d07d1c40260a0ea2a5238e510de038d549772a3[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Mon Mar 6 01:36:47 2023 +0600
+
+    like system and single file view are fixed
+
+[33mcommit a34f38ad421440949041b4ed47ab659ec3ab228a[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Sat Mar 4 01:04:10 2023 +0600
+
+    image hight and width are changed
+    now it's depends on display's widget
+
+[33mcommit 0b3827abe382ae2df7540fe9519604c81eb07888[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Fri Mar 3 17:21:33 2023 +0600
+
+    Finished initial development of app and website.
+
+[33mcommit ac4c61cd10944a9ff5da738c271b1d73266e5ac4[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Fri Mar 3 00:57:57 2023 +0600
+
+    --debug changes
+
+[33mcommit 4cf8bedb023f1319d41647857fd9a42b571cf345[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Fri Mar 3 00:33:17 2023 +0600
+
+    app icon has added for android , ios, web
+
+[33mcommit afc766da5b3a9abc1ccffc529d08df32c8d2cb59[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Thu Mar 2 23:16:13 2023 +0600
+
+    backgraound of text removed
+
+[33mcommit 9313406df3dca6671ccb84fa5108111f2b84bc02[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Thu Mar 2 23:15:23 2023 +0600
+
+    background of tenxt is changed and blue color add
+
+[33mcommit 02dc2c5b1b793dac476109f4d243f48e8c8d45c1[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Thu Mar 2 22:31:30 2023 +0600
+
+    contributor area is done. added awesome degin
+
+[33mcommit 6fb827549a2bb65b2c7a441e7085a5170d20daa3[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Thu Mar 2 01:54:47 2023 +0600
+
+    Some bug fixed and Design imporved.
+
+[33mcommit e23cb44965397a6fdcc3b89a07bfba933d086cfc[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Sun Feb 26 21:32:23 2023 +0600
+
+    admin panel has been added and some features added
+
+[33mcommit 488dab4195a29ff31d48638dad5033bcff1588db[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Sat Feb 25 23:21:37 2023 +0600
+
+    Now you can Like and comment in a post.
+
+[33mcommit 377dd15651b8932c4e98a5669bbd8bec2dcce3a4[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Thu Feb 23 21:29:48 2023 +0600
+
+    Added Search Features...
+    A Big Improvement. Because i have implemented successfully Search option.
+
+[33mcommit da145a4dc0ced6119f3d304524f74299339258ba[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Wed Feb 22 23:47:01 2023 +0600
+
+    code have make more smaller also features added
+
+[33mcommit df061508b366cdb7a06b5f8f50a0d8f9c509991b[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Wed Feb 22 23:46:30 2023 +0600
+
+    Code made more smaller.
+
+[33mcommit c5a2c0981bd324c9c6ca05a2416e8063f104a422[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Sat Feb 18 21:54:01 2023 +0600
+
+    shorted code and added more features
+
+[33mcommit 48a656d98ac68655b5818c558d20cd1eb507a8b7[m
+Author: Ismail Hosen James <md.ismailhosenismailjames@gmail.com>
+Date:   Sat Feb 18 00:45:40 2023 +0600
+
+    Initial Release of this app as version 1.0.0
