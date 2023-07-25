@@ -1,11 +1,11 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:tpiprogrammingclub/auth/init_state.dart';
-import 'package:tpiprogrammingclub/auth/sent_validation_email.dart';
-import 'package:tpiprogrammingclub/auth/signin/profile_iamge_picker.dart';
-import 'package:tpiprogrammingclub/auth/signin/sent_user_data_server.dart';
-import 'package:tpiprogrammingclub/core/show_toast.dart';
+import '../init_state.dart';
+import '../sent_validation_email.dart';
+import 'profile_iamge_picker.dart';
+import 'sent_user_data_server.dart';
+import '../../core/show_toast.dart';
 
 import '../../theme/my_colors_icons.dart';
 import '../login/login.dart';

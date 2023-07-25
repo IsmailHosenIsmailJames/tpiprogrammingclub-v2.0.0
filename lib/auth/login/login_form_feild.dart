@@ -1,8 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tpiprogrammingclub/auth/fogetpassword.dart';
-import 'package:tpiprogrammingclub/auth/init_state.dart';
+import '../fogetpassword.dart';
+import '../init_state.dart';
 
 import '../../theme/my_colors_icons.dart';
 import '../signin/signup.dart';

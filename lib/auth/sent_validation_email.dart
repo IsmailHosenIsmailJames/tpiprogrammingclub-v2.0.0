@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:tpiprogrammingclub/core/show_toast.dart';
+import '../core/show_toast.dart';
 
 Future<bool> sentValidationEmail() async {
   try {

@@ -6,10 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:tpiprogrammingclub/auth/signin/profile_iamge_picker.dart';
-import 'package:tpiprogrammingclub/pages/home/home_page.dart';
 
+import '../../pages/home/home_page.dart';
 import '../fogetpassword.dart';
+import '../signin/profile_iamge_picker.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

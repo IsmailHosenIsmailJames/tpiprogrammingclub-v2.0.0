@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tpiprogrammingclub/pages/admin/delete_post.dart';
-import 'package:tpiprogrammingclub/pages/admin/pending_post.dart';
-import 'package:tpiprogrammingclub/pages/admin/update_rank.dart';
-import 'package:tpiprogrammingclub/pages/home/home_page.dart';
 
+import '../home/home_page.dart';
+import 'delete_post.dart';
+import 'pending_post.dart';
 import 'restore.dart';
+import 'update_rank.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});

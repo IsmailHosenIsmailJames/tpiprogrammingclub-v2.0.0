@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tpiprogrammingclub/core/show_toast.dart';
+import '../core/show_toast.dart';
 import 'my_colors_icons.dart';
 import 'theme_storage_manager.dart';
 import 'theme_provider.dart';

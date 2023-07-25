@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:tpiprogrammingclub/core/show_toast.dart';
+import '../../core/show_toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../auth/login/previous_login.dart';

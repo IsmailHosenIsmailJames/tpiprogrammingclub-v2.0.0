@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:tpiprogrammingclub/pages/profile/profile.dart';
-import 'package:tpiprogrammingclub/widget/modify_post.dart';
+import '../pages/profile/profile.dart';
+import 'modify_post.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../auth/login/previous_login.dart';
