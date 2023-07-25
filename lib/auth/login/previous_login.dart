@@ -1,17 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tpiprogrammingclub/auth/signin/profile_iamge_picker.dart';
 import 'package:tpiprogrammingclub/pages/home/home_page.dart';
 
-import 'fogetpassword.dart';
+import '../fogetpassword.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -214,33 +212,15 @@ class _LoginState extends State<Login> {
                     key2.currentState!.validate()) {
                   try {
                     if (!kIsWeb) {
-                      FilePickerResult? result =
-                          await FilePicker.platform.pickFiles(
-                        allowCompression: true,
-                        type: FileType.custom,
-                        allowMultiple: false,
-                        allowedExtensions: ['jpg', 'png'],
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
                       );
-                      if (result != null) {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-
-                        final tem = result.files.first;
-                        String? extension = tem.extension;
-                        File imageFile = File(tem.path!);
-
-                        String uploadePath =
-                            "user/${email.text.trim()}.$extension";
-                        final ref =
-                            FirebaseStorage.instance.ref().child(uploadePath);
-                        UploadTask uploadTask;
-                        uploadTask = ref.putFile(imageFile);
-                        final snapshot = await uploadTask.whenComplete(() {});
-                        String url = await snapshot.ref.getDownloadURL();
+                      String url =
+                          await pickProfilePicMobile(email.text.trim());
+                      if (url != "") {
                         final temRef = FirebaseFirestore.instance
                             .collection('user')
                             .doc('allUser');
@@ -285,38 +265,20 @@ class _LoginState extends State<Login> {
                           textColor: Colors.white,
                           timeInSecForIosWeb: 3,
                         );
+                        if (Navigator.of(context).canPop()) {
+                          Navigator.of(context).pop();
+                        }
                       }
                     }
                     if (kIsWeb) {
-                      FilePickerResult? result = await FilePicker.platform
-                          .pickFiles(
-                              type: FileType.custom,
-                              allowMultiple: false,
-                              allowCompression: true,
-                              allowedExtensions: ['jpg', 'png']);
-
-                      if (result != null) {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-
-                        final tem = result.files.first;
-                        Uint8List? selectedImage = tem.bytes;
-                        String? extension = tem.extension;
-                        String uploadePath =
-                            "user/${email.text.trim()}.$extension";
-                        final ref =
-                            FirebaseStorage.instance.ref().child(uploadePath);
-                        UploadTask uploadTask;
-                        final metadata =
-                            SettableMetadata(contentType: 'image/jpeg');
-                        uploadTask = ref.putData(selectedImage!, metadata);
-                        final snapshot = await uploadTask.whenComplete(() {});
-                        String url = await snapshot.ref.getDownloadURL();
-
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                      String url = await pickProfilePicWeb(email.text.trim());
+                      if (url != "") {
                         final temRef = FirebaseFirestore.instance
                             .collection('user')
                             .doc('allUser');
@@ -376,6 +338,9 @@ class _LoginState extends State<Login> {
                           textColor: Colors.white,
                           timeInSecForIosWeb: 3,
                         );
+                        if (Navigator.of(context).canPop()) {
+                          Navigator.of(context).pop();
+                        }
                       }
                     }
                   } on FirebaseAuthException catch (e) {

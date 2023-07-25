@@ -12,7 +12,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tpiprogrammingclub/pages/home/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../authentication/login.dart';
+import '../../auth/login/previous_login.dart';
 import '../../widget/comment.dart';
 import '../../widget/modify_post.dart';
 

@@ -49,7 +49,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '979979882370',
     projectId: 'tpiprogrammingclub',
     authDomain: 'tpiprogrammingclub.firebaseapp.com',
-    databaseURL: 'https://tpiprogrammingclub-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://tpiprogrammingclub-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'tpiprogrammingclub.appspot.com',
     measurementId: 'G-1GHFSNRQQ6',
   );
@@ -59,7 +60,8 @@ class DefaultFirebaseOptions {
     appId: '1:979979882370:android:f5cc23318df6f566bf899b',
     messagingSenderId: '979979882370',
     projectId: 'tpiprogrammingclub',
-    databaseURL: 'https://tpiprogrammingclub-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://tpiprogrammingclub-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'tpiprogrammingclub.appspot.com',
   );
 
@@ -68,10 +70,13 @@ class DefaultFirebaseOptions {
     appId: '1:979979882370:ios:d421523200717435bf899b',
     messagingSenderId: '979979882370',
     projectId: 'tpiprogrammingclub',
-    databaseURL: 'https://tpiprogrammingclub-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://tpiprogrammingclub-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'tpiprogrammingclub.appspot.com',
-    androidClientId: '979979882370-5j41lglqi81m9oilg0kqdh4aea8gjflp.apps.googleusercontent.com',
-    iosClientId: '979979882370-r3nb57kk1cu0brd1gasofetpl2ka6g3o.apps.googleusercontent.com',
+    androidClientId:
+        '979979882370-5j41lglqi81m9oilg0kqdh4aea8gjflp.apps.googleusercontent.com',
+    iosClientId:
+        '979979882370-r3nb57kk1cu0brd1gasofetpl2ka6g3o.apps.googleusercontent.com',
     iosBundleId: 'com.example.tpiprogrammingclub',
   );
 
@@ -80,10 +85,13 @@ class DefaultFirebaseOptions {
     appId: '1:979979882370:ios:d421523200717435bf899b',
     messagingSenderId: '979979882370',
     projectId: 'tpiprogrammingclub',
-    databaseURL: 'https://tpiprogrammingclub-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://tpiprogrammingclub-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'tpiprogrammingclub.appspot.com',
-    androidClientId: '979979882370-5j41lglqi81m9oilg0kqdh4aea8gjflp.apps.googleusercontent.com',
-    iosClientId: '979979882370-r3nb57kk1cu0brd1gasofetpl2ka6g3o.apps.googleusercontent.com',
+    androidClientId:
+        '979979882370-5j41lglqi81m9oilg0kqdh4aea8gjflp.apps.googleusercontent.com',
+    iosClientId:
+        '979979882370-r3nb57kk1cu0brd1gasofetpl2ka6g3o.apps.googleusercontent.com',
     iosBundleId: 'com.example.tpiprogrammingclub',
   );
 }

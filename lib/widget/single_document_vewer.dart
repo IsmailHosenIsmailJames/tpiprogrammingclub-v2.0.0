@@ -13,7 +13,8 @@ import 'package:tpiprogrammingclub/pages/profile/profile.dart';
 import 'package:tpiprogrammingclub/widget/modify_post.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../authentication/login.dart';
+import '../auth/login/previous_login.dart';
+import '../core/show_toast.dart';
 import '../pages/home/home_page.dart';
 import 'comment.dart';
 
@@ -167,14 +168,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                                       text: singleDoc['doc'],
                                     ),
                                   );
-                                  Fluttertoast.showToast(
-                                    msg: "Copied Successfull!",
-                                    toastLength: Toast.LENGTH_LONG,
-                                    gravity: ToastGravity.BOTTOM,
-                                    backgroundColor: Colors.grey[700],
-                                    textColor: Colors.white,
-                                    timeInSecForIosWeb: 3,
-                                  );
+                                  showToast("Copied Successfull!");
                                 },
                                 child: const Row(
                                   children: [
@@ -195,14 +189,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                                   Clipboard.setData(
                                     ClipboardData(text: singleDoc['doc']),
                                   );
-                                  Fluttertoast.showToast(
-                                    msg: "Copied Successfull!",
-                                    toastLength: Toast.LENGTH_LONG,
-                                    gravity: ToastGravity.BOTTOM,
-                                    backgroundColor: Colors.grey[700],
-                                    textColor: Colors.white,
-                                    timeInSecForIosWeb: 3,
-                                  );
+                                  showToast("Copied Successfull!");
 
                                   if (widget.path == "python") {
                                     if (!await launchUrl(
@@ -210,14 +197,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                                         'https://replit.com/languages/python3',
                                       ),
                                     )) {
-                                      Fluttertoast.showToast(
-                                        msg: "Couldn't launch url!",
-                                        toastLength: Toast.LENGTH_LONG,
-                                        gravity: ToastGravity.BOTTOM,
-                                        backgroundColor: Colors.grey[700],
-                                        textColor: Colors.white,
-                                        timeInSecForIosWeb: 3,
-                                      );
+                                      showToast("Couldn't luanch url");
                                     }
                                   } else if (widget.path == "java") {
                                     if (!await launchUrl(
@@ -225,14 +205,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                                         'https://replit.com/languages/java10',
                                       ),
                                     )) {
-                                      Fluttertoast.showToast(
-                                        msg: "Couldn't launch url!",
-                                        toastLength: Toast.LENGTH_LONG,
-                                        gravity: ToastGravity.BOTTOM,
-                                        backgroundColor: Colors.grey[700],
-                                        textColor: Colors.white,
-                                        timeInSecForIosWeb: 3,
-                                      );
+                                      showToast("Couldn't luanch url");
                                     }
                                   } else if (widget.path == 'javascript') {
                                     if (!await launchUrl(
@@ -240,14 +213,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                                         'https://replit.com/languages/nodejs',
                                       ),
                                     )) {
-                                      Fluttertoast.showToast(
-                                        msg: "Couldn't launch url!",
-                                        toastLength: Toast.LENGTH_LONG,
-                                        gravity: ToastGravity.BOTTOM,
-                                        backgroundColor: Colors.grey[700],
-                                        textColor: Colors.white,
-                                        timeInSecForIosWeb: 3,
-                                      );
+                                      showToast("Couldn't luanch url");
                                     }
                                   } else if (widget.path == 'c++') {
                                     if (!await launchUrl(
@@ -255,14 +221,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                                         'https://replit.com/languages/cpp',
                                       ),
                                     )) {
-                                      Fluttertoast.showToast(
-                                        msg: "Couldn't launch url!",
-                                        toastLength: Toast.LENGTH_LONG,
-                                        gravity: ToastGravity.BOTTOM,
-                                        backgroundColor: Colors.grey[700],
-                                        textColor: Colors.white,
-                                        timeInSecForIosWeb: 3,
-                                      );
+                                      showToast("Couldn't luanch url");
                                     }
                                   } else if (widget.path == 'c#') {
                                     if (!await launchUrl(
@@ -270,14 +229,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                                         'https://replit.com/languages/csharp',
                                       ),
                                     )) {
-                                      Fluttertoast.showToast(
-                                        msg: "Couldn't launch url!",
-                                        toastLength: Toast.LENGTH_LONG,
-                                        gravity: ToastGravity.BOTTOM,
-                                        backgroundColor: Colors.grey[700],
-                                        textColor: Colors.white,
-                                        timeInSecForIosWeb: 3,
-                                      );
+                                      showToast("Couldn't luanch url");
                                     }
                                   } else if (widget.path == 'c') {
                                     if (!await launchUrl(
@@ -285,14 +237,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                                         'https://replit.com/languages/c',
                                       ),
                                     )) {
-                                      Fluttertoast.showToast(
-                                        msg: "Couldn't launch url!",
-                                        toastLength: Toast.LENGTH_LONG,
-                                        gravity: ToastGravity.BOTTOM,
-                                        backgroundColor: Colors.grey[700],
-                                        textColor: Colors.white,
-                                        timeInSecForIosWeb: 3,
-                                      );
+                                      showToast("Couldn't luanch url");
                                     }
                                   } else if (widget.path == 'dart') {
                                     if (!await launchUrl(
@@ -300,14 +245,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                                         'https://dartpad.dev/?',
                                       ),
                                     )) {
-                                      Fluttertoast.showToast(
-                                        msg: "Couldn't launch url!",
-                                        toastLength: Toast.LENGTH_LONG,
-                                        gravity: ToastGravity.BOTTOM,
-                                        backgroundColor: Colors.grey[700],
-                                        textColor: Colors.white,
-                                        timeInSecForIosWeb: 3,
-                                      );
+                                      showToast("Couldn't luanch url");
                                     }
                                   } else if (widget.path == 'html' ||
                                       widget.path == 'css') {
@@ -316,14 +254,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                                         'https://www.programiz.com/html/online-compiler/',
                                       ),
                                     )) {
-                                      Fluttertoast.showToast(
-                                        msg: "Couldn't launch url!",
-                                        toastLength: Toast.LENGTH_LONG,
-                                        gravity: ToastGravity.BOTTOM,
-                                        backgroundColor: Colors.grey[700],
-                                        textColor: Colors.white,
-                                        timeInSecForIosWeb: 3,
-                                      );
+                                      showToast("Couldn't luanch url");
                                     }
                                   } else {
                                     Fluttertoast.showToast(

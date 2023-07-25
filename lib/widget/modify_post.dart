@@ -10,10 +10,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../core/show_toast.dart';
 import '../pages/home/home_page.dart';
 
 class ModifyPost extends StatefulWidget {
@@ -72,14 +72,7 @@ class _ModifyPostState extends State<ModifyPost> {
 
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
-    Fluttertoast.showToast(
-      msg: "Modified Successfully",
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.grey[700],
-      textColor: Colors.white,
-      timeInSecForIosWeb: 3,
-    );
+    showToast("Modified Successful!");
   }
 
   void add() {
@@ -96,14 +89,7 @@ class _ModifyPostState extends State<ModifyPost> {
 
   void apply() {
     if (jsonDataList.isEmpty) {
-      Fluttertoast.showToast(
-        msg: "The Post is Empty.",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.grey[700],
-        textColor: Colors.white,
-        timeInSecForIosWeb: 3,
-      );
+      showToast("The Post is Empty!");
     } else {
       final doc = jsonDataList[indexForEditing];
       String type = doc!['type']!;

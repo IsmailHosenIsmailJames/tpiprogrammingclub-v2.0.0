@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../authentication/login.dart';
+import 'package:tpiprogrammingclub/core/show_toast.dart';
+import '../../auth/login/previous_login.dart';
 import '../../pages/admin/admin.dart';
 import '../../pages/contents/contents.dart';
 import '../../theme/change_button_theme.dart';
@@ -34,17 +35,21 @@ class _HomePageState extends State<HomePage>
   void getdata() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      final json = await FirebaseFirestore.instance
-          .collection('user')
-          .doc(user.email!)
-          .get();
+      try {
+        final json = await FirebaseFirestore.instance
+            .collection('user')
+            .doc(user.email!)
+            .get();
 
-      setState(() {
-        profileLink = json['profile'];
-        name = json['name'];
-        chatID = json['chatID'];
-        callOneTime = false;
-      });
+        setState(() {
+          profileLink = json['profile'];
+          name = json['name'];
+          chatID = "${json['chatID']}";
+          callOneTime = false;
+        });
+      } catch (e) {
+        showToast(e.toString());
+      }
     }
   }
 

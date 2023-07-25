@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'package:tpiprogrammingclub/authentication/login.dart';
+import 'package:tpiprogrammingclub/auth/login/previous_login.dart';
+import 'package:tpiprogrammingclub/auth/init_state.dart';
 import 'package:tpiprogrammingclub/pages/contents/contents.dart';
 import 'package:tpiprogrammingclub/pages/contributors/contributors.dart';
 import 'package:tpiprogrammingclub/pages/home/home_page.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
             darkTheme: ThemeData.dark(),
             initialRoute: '/',
             routes: {
-              "/": (context) => const HomePage(),
+              "/": (context) => const InItState(),
               "/login": (context) => const Login(),
               "/home": (context) => const HomePage(),
               "/search": (context) => const Search(),

@@ -5,9 +5,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tpiprogrammingclub/pages/profile/profile.dart';
 
+import '../core/show_toast.dart';
 import '../pages/home/home_page.dart';
 
 class AllComment extends StatefulWidget {
@@ -168,14 +168,7 @@ class _AllCommentState extends State<AllComment> {
                             setState(() {
                               comment;
                             });
-                            Fluttertoast.showToast(
-                              msg: "Comment Sent Successfull",
-                              toastLength: Toast.LENGTH_LONG,
-                              gravity: ToastGravity.BOTTOM,
-                              backgroundColor: Colors.grey[700],
-                              textColor: Colors.white,
-                              timeInSecForIosWeb: 3,
-                            );
+                            showToast("Comment sent Successful!");
                           }
                         }
                       },

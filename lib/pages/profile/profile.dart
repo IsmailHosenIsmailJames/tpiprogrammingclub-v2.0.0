@@ -10,6 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tpiprogrammingclub/core/show_toast.dart';
 import 'package:tpiprogrammingclub/pages/home/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../widget/single_document_vewer.dart';
@@ -279,7 +280,9 @@ class _ProfileState extends State<Profile> {
                   }
                 }
                 get();
-              } catch (e) {}
+              } catch (e) {
+                showToast(e.toString());
+              }
             },
             child: const Text("Update Profile"),
           ),

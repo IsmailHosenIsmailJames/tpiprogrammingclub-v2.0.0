@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
+import '../core/show_toast.dart';
 import '../pages/home/home_page.dart';
 import 'editor.dart';
 
@@ -159,15 +159,8 @@ class _PublishPostState extends State<PublishPost> {
                             .doc(sId);
                         final temdoc = await cheakRef.get();
                         if (temdoc.exists) {
-                          Fluttertoast.showToast(
-                            msg:
-                                "This Document Rank is allready exits. Try to change the Rank",
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.grey[700],
-                            textColor: Colors.white,
-                            timeInSecForIosWeb: 3,
-                          );
+                          showToast(
+                              "This Document Rank is allready exits. Try to change the Rank");
                         } else {
                           DateTime now = DateTime.now();
                           int randomNumber = now.year * 365 * 24 * 60 * 60 +
@@ -201,14 +194,7 @@ class _PublishPostState extends State<PublishPost> {
 
                         Navigator.pop(context);
                         Navigator.pop(context);
-                        Fluttertoast.showToast(
-                          msg: "Published Successfully",
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.BOTTOM,
-                          backgroundColor: Colors.grey[700],
-                          textColor: Colors.white,
-                          timeInSecForIosWeb: 3,
-                        );
+                        showToast("Published Successfully");
                       },
                       child: const Text("Publish"),
                     ),

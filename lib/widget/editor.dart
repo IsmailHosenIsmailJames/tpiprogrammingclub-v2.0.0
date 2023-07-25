@@ -12,8 +12,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../core/show_toast.dart';
 import '../pages/home/home_page.dart';
 import 'publish_post.dart';
 
@@ -336,18 +336,8 @@ class _EditorState extends State<Editor> {
                                                             text: code,
                                                           ),
                                                         );
-                                                        Fluttertoast.showToast(
-                                                          msg:
-                                                              "Copied Successfull!",
-                                                          toastLength:
-                                                              Toast.LENGTH_LONG,
-                                                          gravity: ToastGravity
-                                                              .BOTTOM,
-                                                          backgroundColor:
-                                                              Colors.grey[700],
-                                                          textColor:
-                                                              Colors.white,
-                                                        );
+                                                        showToast(
+                                                            "Copied Successful!");
                                                       },
                                                       child: const Row(
                                                         children: [

@@ -10,10 +10,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tpiprogrammingclub/core/show_toast.dart';
 import 'package:tpiprogrammingclub/widget/editor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../authentication/login.dart';
+import '../../auth/login/previous_login.dart';
 import '../../widget/comment.dart';
 import '../../widget/modify_post.dart';
 import '../home/home_page.dart';
@@ -138,7 +139,9 @@ class _ContentsState extends State<Contents>
         fullID = fillString + fullID;
         makeTheListWidget(ids, title, contentName);
         getSingleDocument(contentName, fullID);
-      } catch (e) {}
+      } catch (e) {
+        showToast(e.toString());
+      }
     }
 
     if (splitedPath.length == 3) {
