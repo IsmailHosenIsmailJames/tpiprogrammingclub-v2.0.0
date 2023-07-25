@@ -4,8 +4,23 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 
-Future<String> pickProfilePicMobile(String email) async {
-  String url = "";
+class PickPhotoFileWithUrlMobile {
+  final String? url;
+  final File? imageFile;
+
+  PickPhotoFileWithUrlMobile(this.imageFile, this.url);
+}
+
+class PickPhotoFileWithUrlWeb {
+  final String? url;
+  final Uint8List? imageFile;
+
+  PickPhotoFileWithUrlWeb(this.imageFile, this.url);
+}
+
+Future<PickPhotoFileWithUrlMobile> pickPhotoMobile(String email) async {
+  String? url;
+  File? imageFile;
   FilePickerResult? result = await FilePicker.platform.pickFiles(
     allowCompression: true,
     type: FileType.custom,
@@ -15,7 +30,7 @@ Future<String> pickProfilePicMobile(String email) async {
   if (result != null) {
     final tem = result.files.first;
     String? extension = tem.extension;
-    File imageFile = File(tem.path!);
+    imageFile = File(tem.path!);
 
     String uploadePath = "user/$email.$extension";
     final ref = FirebaseStorage.instance.ref().child(uploadePath);
@@ -24,11 +39,12 @@ Future<String> pickProfilePicMobile(String email) async {
     final snapshot = await uploadTask.whenComplete(() {});
     url = await snapshot.ref.getDownloadURL();
   }
-  return url;
+  return PickPhotoFileWithUrlMobile(imageFile, url);
 }
 
-Future<String> pickProfilePicWeb(String email) async {
-  String url = "";
+Future<PickPhotoFileWithUrlWeb> pickPhotoWeb(String email) async {
+  String? url = "";
+  Uint8List? selectedImage;
   FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowMultiple: false,
@@ -37,7 +53,7 @@ Future<String> pickProfilePicWeb(String email) async {
 
   if (result != null) {
     final tem = result.files.first;
-    Uint8List? selectedImage = tem.bytes;
+    selectedImage = tem.bytes;
     String? extension = tem.extension;
     String uploadePath = "user/$email.$extension";
     final ref = FirebaseStorage.instance.ref().child(uploadePath);
@@ -47,5 +63,5 @@ Future<String> pickProfilePicWeb(String email) async {
     final snapshot = await uploadTask.whenComplete(() {});
     url = await snapshot.ref.getDownloadURL();
   }
-  return url;
+  return PickPhotoFileWithUrlWeb(selectedImage, url);
 }

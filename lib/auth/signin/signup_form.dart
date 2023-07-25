@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../init_state.dart';
 import '../sent_validation_email.dart';
-import 'profile_iamge_picker.dart';
+import '../../core/iamge_picker.dart';
 import 'sent_user_data_server.dart';
 import '../../core/show_toast.dart';
 
@@ -24,8 +26,11 @@ class _SignUpFormState extends State<SignUpForm> {
   final passCon = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final name = TextEditingController();
-  String url = "";
+  String? url = "";
+  File? picForMobile;
+  Uint8List? picForWeb;
   Widget profileAvatar = const Icon(Icons.person, size: 80);
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -162,30 +167,39 @@ class _SignUpFormState extends State<SignUpForm> {
                   );
 
                   if (!kIsWeb) {
-                    String temUrl =
-                        await pickProfilePicMobile(emailCon.text.trim());
-                    setState(() {
-                      url = temUrl;
+                    await pickPhotoMobile(emailCon.text.trim()).then((value) {
+                      setState(() {
+                        url = value.url;
+                        picForMobile = value.imageFile;
+                      });
                     });
                   } else {
-                    String temUrl =
-                        await pickProfilePicWeb(emailCon.text.trim());
-                    setState(() {
-                      url = temUrl;
+                    await pickPhotoWeb(emailCon.text.trim()).then((value) {
+                      setState(() {
+                        url = value.url;
+                        picForWeb = value.imageFile;
+                      });
                     });
                   }
                   // ignore: use_build_context_synchronously
                   if (Navigator.canPop(context)) Navigator.pop(context);
-                  if (url == "") {
+                  if (url == null) {
                     showToast("Please select a profile.");
                     return;
                   } else {
                     showToast("Image Upload Successful!");
                     setState(() {
-                      profileAvatar = Image.network(
-                        url,
-                        fit: BoxFit.cover,
-                      );
+                      if (picForMobile != null) {
+                        profileAvatar = Image.file(
+                          picForMobile!,
+                          fit: BoxFit.cover,
+                        );
+                      } else if (picForWeb != null) {
+                        profileAvatar = Image.memory(
+                          picForWeb!,
+                          fit: BoxFit.cover,
+                        );
+                      }
                     });
                   }
                 }
@@ -201,7 +215,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 backgroundColor: MyColorsIcons.gradient2,
                 minimumSize: const Size(300, 60)),
             onPressed: () async {
-              if (url == "") {
+              if (url == null) {
                 showToast("Please select a profile photo.");
                 return;
               }
@@ -216,7 +230,7 @@ class _SignUpFormState extends State<SignUpForm> {
               );
               await createUser(emailCon.text.trim(), passCon.text);
               await sentUserDataServer(
-                  emailCon.text.trim(), name.text.trim(), url);
+                  emailCon.text.trim(), name.text.trim(), url!);
               await sentValidationEmail();
               // ignore: use_build_context_synchronously
               if (Navigator.canPop(context)) Navigator.pop(context);
