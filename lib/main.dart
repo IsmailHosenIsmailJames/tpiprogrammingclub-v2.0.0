@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'auth/login/previous_login.dart';
+import 'auth/login/login.dart';
 import 'auth/init_state.dart';
 import 'pages/contents/contents.dart';
 import 'pages/contributors/contributors.dart';
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             initialRoute: '/',
             routes: {
               "/": (context) => const InItState(),
-              "/login": (context) => const Login(),
+              "/login": (context) => const LogIn(),
               "/home": (context) => const HomePage(),
               "/search": (context) => const Search(),
               "/contributors": (context) => const Contributors(),

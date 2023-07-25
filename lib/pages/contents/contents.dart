@@ -10,11 +10,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tpiprogrammingclub/core/show_toast.dart';
-import 'package:tpiprogrammingclub/widget/editor.dart';
+import '../../auth/login/login.dart';
+import '../../core/show_toast.dart';
+import '../../widget/editor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../auth/login/previous_login.dart';
 import '../../widget/comment.dart';
 import '../../widget/modify_post.dart';
 import '../home/home_page.dart';
@@ -765,7 +765,7 @@ class _ContentsState extends State<Contents>
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Login(),
+                              builder: (context) => const LogIn(),
                             ),
                           );
                           getSingleDocument(contentName, id);
@@ -804,7 +804,7 @@ class _ContentsState extends State<Contents>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Login(),
+                              builder: (context) => const LogIn(),
                             ),
                           );
                         }
@@ -866,7 +866,7 @@ class _ContentsState extends State<Contents>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Login(),
+                              builder: (context) => const LogIn(),
                             ),
                           );
                         }
@@ -1030,7 +1030,7 @@ class _ContentsState extends State<Contents>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Login(),
+                              builder: (context) => const LogIn(),
                             ),
                           );
                         }

@@ -54,6 +54,8 @@ class _LogInFormState extends State<LogInForm> {
                 }
               },
               decoration: InputDecoration(
+                errorStyle: const TextStyle(
+                    color: Colors.redAccent, fontWeight: FontWeight.bold),
                 labelText: "Email",
                 hintText: "Type your email...",
                 border: MyColorsIcons.outLinedBorderForTextFromFeild,
@@ -78,6 +80,8 @@ class _LogInFormState extends State<LogInForm> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     obscureText: isSecureText,
                     decoration: InputDecoration(
+                      errorStyle: const TextStyle(
+                          color: Colors.redAccent, fontWeight: FontWeight.bold),
                       labelText: "Password",
                       hintText: "Type your password...",
                       border: MyColorsIcons.outLinedBorderForTextFromFeild,

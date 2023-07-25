@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tpiprogrammingclub/core/show_toast.dart';
-import '../../auth/login/previous_login.dart';
+import '../../auth/login/login.dart';
+import '../../core/show_toast.dart';
 import '../../pages/admin/admin.dart';
 import '../../pages/contents/contents.dart';
 import '../../theme/change_button_theme.dart';
@@ -239,7 +239,7 @@ class _MyDrawerState extends State<MyDrawer>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Login(),
+                        builder: (context) => const LogIn(),
                       ),
                     );
                   }
@@ -271,7 +271,7 @@ class _MyDrawerState extends State<MyDrawer>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Login(),
+                        builder: (context) => const LogIn(),
                       ),
                     );
                   }
@@ -1126,7 +1126,7 @@ class _MyDrawerState extends State<MyDrawer>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Login(),
+                    builder: (context) => const LogIn(),
                   ),
                 );
               }
@@ -1155,7 +1155,7 @@ class _MyDrawerState extends State<MyDrawer>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Login(),
+                    builder: (context) => const LogIn(),
                   ),
                 );
               }

@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tpiprogrammingclub/auth/login/login.dart';
 import 'package:tpiprogrammingclub/pages/home/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../auth/login/previous_login.dart';
 import '../../widget/comment.dart';
 import '../../widget/modify_post.dart';
 
@@ -441,7 +441,7 @@ class _HomeState extends State<Home> {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Login(),
+                              builder: (context) => const LogIn(),
                             ),
                           );
                           getSingleDocument(contentName, id);
@@ -480,7 +480,7 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Login(),
+                              builder: (context) => const LogIn(),
                             ),
                           );
                         }
@@ -542,7 +542,7 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Login(),
+                              builder: (context) => const LogIn(),
                             ),
                           );
                         }

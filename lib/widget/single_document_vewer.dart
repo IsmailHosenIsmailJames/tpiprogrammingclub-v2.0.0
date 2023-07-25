@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:fluttertoast/fluttertoast.dart';
+import '../auth/login/login.dart';
 import '../pages/profile/profile.dart';
 import 'modify_post.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../auth/login/previous_login.dart';
 import '../core/show_toast.dart';
 import '../pages/home/home_page.dart';
 import 'comment.dart';
@@ -485,7 +485,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Login(),
+                              builder: (context) => const LogIn(),
                             ),
                           );
                           getFile();
@@ -524,7 +524,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Login(),
+                              builder: (context) => const LogIn(),
                             ),
                           );
                         }
@@ -586,7 +586,7 @@ class _SingleDocumentViewerState extends State<SingleDocumentViewer> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Login(),
+                              builder: (context) => const LogIn(),
                             ),
                           );
                         }

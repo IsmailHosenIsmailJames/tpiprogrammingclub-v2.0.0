@@ -72,6 +72,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 }
               },
               decoration: InputDecoration(
+                errorStyle: const TextStyle(
+                    color: Colors.redAccent, fontWeight: FontWeight.bold),
                 labelText: "Name",
                 hintText: "Type your name...",
                 border: MyColorsIcons.outLinedBorderForTextFromFeild,
@@ -92,6 +94,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 }
               },
               decoration: InputDecoration(
+                errorStyle: const TextStyle(
+                    color: Colors.redAccent, fontWeight: FontWeight.bold),
                 labelText: "Email",
                 hintText: "Type your email...",
                 border: MyColorsIcons.outLinedBorderForTextFromFeild,
@@ -116,6 +120,8 @@ class _SignUpFormState extends State<SignUpForm> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     obscureText: isSecureText,
                     decoration: InputDecoration(
+                      errorStyle: const TextStyle(
+                          color: Colors.redAccent, fontWeight: FontWeight.bold),
                       labelText: "Password",
                       hintText: "Type your password...",
                       border: MyColorsIcons.outLinedBorderForTextFromFeild,
