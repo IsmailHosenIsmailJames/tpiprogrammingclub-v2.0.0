@@ -13,8 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../core/show_toast.dart';
-import '../pages/home/home_page.dart';
+import '../../core/show_toast.dart';
+import '../home/home_page.dart';
 import 'publish_post.dart';
 
 class Editor extends StatefulWidget {

@@ -11,7 +11,7 @@ import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:fluttertoast/fluttertoast.dart';
 import '../auth/login/login.dart';
 import '../pages/profile/profile.dart';
-import 'modify_post.dart';
+import '../pages/post/modify_post.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../core/show_toast.dart';

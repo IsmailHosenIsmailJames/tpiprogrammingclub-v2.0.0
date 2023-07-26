@@ -12,11 +12,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../auth/login/login.dart';
 import '../../core/show_toast.dart';
-import '../../widget/editor.dart';
+import '../post/editor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widget/comment.dart';
-import '../../widget/modify_post.dart';
+import '../post/modify_post.dart';
 import '../home/home_page.dart';
 import '../profile/profile.dart';
 

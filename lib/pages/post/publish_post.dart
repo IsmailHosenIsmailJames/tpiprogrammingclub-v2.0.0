@@ -5,8 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../core/show_toast.dart';
-import '../pages/home/home_page.dart';
+import '../../core/show_toast.dart';
+import '../home/home_page.dart';
 import 'editor.dart';
 
 class PublishPost extends StatefulWidget {

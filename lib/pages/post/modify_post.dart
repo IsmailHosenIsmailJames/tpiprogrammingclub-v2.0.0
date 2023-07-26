@@ -13,8 +13,8 @@ import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../core/show_toast.dart';
-import '../pages/home/home_page.dart';
+import '../../core/show_toast.dart';
+import '../home/home_page.dart';
 
 class ModifyPost extends StatefulWidget {
   final String path;

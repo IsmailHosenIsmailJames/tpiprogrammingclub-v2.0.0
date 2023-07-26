@@ -14,7 +14,7 @@ import 'package:tpiprogrammingclub/pages/home/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widget/comment.dart';
-import '../../widget/modify_post.dart';
+import '../post/modify_post.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
