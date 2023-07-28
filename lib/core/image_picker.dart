@@ -18,7 +18,7 @@ class PickPhotoFileWithUrlWeb {
   PickPhotoFileWithUrlWeb(this.imageFile, this.url);
 }
 
-Future<PickPhotoFileWithUrlMobile> pickPhotoMobile(String email) async {
+Future<PickPhotoFileWithUrlMobile> pickPhotoMobile(String path) async {
   String? url;
   File? imageFile;
   FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -32,7 +32,7 @@ Future<PickPhotoFileWithUrlMobile> pickPhotoMobile(String email) async {
     String? extension = tem.extension;
     imageFile = File(tem.path!);
 
-    String uploadePath = "user/$email.$extension";
+    String uploadePath = "$path.$extension";
     final ref = FirebaseStorage.instance.ref().child(uploadePath);
     UploadTask uploadTask;
     uploadTask = ref.putFile(imageFile);
@@ -42,7 +42,7 @@ Future<PickPhotoFileWithUrlMobile> pickPhotoMobile(String email) async {
   return PickPhotoFileWithUrlMobile(imageFile, url);
 }
 
-Future<PickPhotoFileWithUrlWeb> pickPhotoWeb(String email) async {
+Future<PickPhotoFileWithUrlWeb> pickPhotoWeb(String path) async {
   String? url = "";
   Uint8List? selectedImage;
   FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -55,7 +55,7 @@ Future<PickPhotoFileWithUrlWeb> pickPhotoWeb(String email) async {
     final tem = result.files.first;
     selectedImage = tem.bytes;
     String? extension = tem.extension;
-    String uploadePath = "user/$email.$extension";
+    String uploadePath = "$path.$extension";
     final ref = FirebaseStorage.instance.ref().child(uploadePath);
     UploadTask uploadTask;
     final metadata = SettableMetadata(contentType: 'image/jpeg');

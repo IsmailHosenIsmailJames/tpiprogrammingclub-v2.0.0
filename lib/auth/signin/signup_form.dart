@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../init_state.dart';
 import '../sent_validation_email.dart';
-import '../../core/iamge_picker.dart';
+import '../../core/image_picker.dart';
 import 'sent_user_data_server.dart';
 import '../../core/show_toast.dart';
 
@@ -167,14 +167,16 @@ class _SignUpFormState extends State<SignUpForm> {
                   );
 
                   if (!kIsWeb) {
-                    await pickPhotoMobile(emailCon.text.trim()).then((value) {
+                    await pickPhotoMobile("user/${emailCon.text.trim()}")
+                        .then((value) {
                       setState(() {
                         url = value.url;
                         picForMobile = value.imageFile;
                       });
                     });
                   } else {
-                    await pickPhotoWeb(emailCon.text.trim()).then((value) {
+                    await pickPhotoWeb("user/${emailCon.text.trim()}")
+                        .then((value) {
                       setState(() {
                         url = value.url;
                         picForWeb = value.imageFile;

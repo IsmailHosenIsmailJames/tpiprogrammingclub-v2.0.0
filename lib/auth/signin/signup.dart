@@ -94,29 +94,15 @@ class _SignInState extends State<SignUp> {
                 const ChangeThemeButtonWidget(value: 1),
               ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.90,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(80, 139, 139, 139),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const WelcomeLogIn()),
-                const SizedBox(
-                  height: 50,
+            Center(
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.90,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(80, 139, 139, 139),
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.90,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(80, 139, 139, 139),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const SignUpForm(),
-                ),
-              ],
+                child: const SignUpForm(),
+              ),
             ),
           ],
         ),

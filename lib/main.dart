@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'auth/login/login.dart';
-import 'auth/init_state.dart';
 import 'pages/contents/contents.dart';
 import 'pages/contributors/contributors.dart';
 import 'pages/home/home_page.dart';
+import 'pages/post/post_editor.dart';
 import 'widget/search.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'firebase_options.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             darkTheme: ThemeData.dark(),
             initialRoute: '/',
             routes: {
-              "/": (context) => const InItState(),
+              "/": (context) => const PostEditor(),
               "/login": (context) => const LogIn(),
               "/home": (context) => const HomePage(),
               "/search": (context) => const Search(),

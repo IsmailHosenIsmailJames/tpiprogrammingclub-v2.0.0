@@ -4,8 +4,6 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:convert';
 import 'dart:io';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../core/image_picker.dart';
 import '../../core/show_toast.dart';
 import '../home/home_page.dart';
 import 'publish_post.dart';
@@ -91,76 +90,48 @@ class _EditorState extends State<Editor> {
                     _controller.clear();
                   });
                   if (!kIsWeb) {
-                    FilePickerResult? result =
-                        await FilePicker.platform.pickFiles(
-                      allowCompression: true,
-                      type: FileType.custom,
-                      allowMultiple: false,
-                      allowedExtensions: ['jpg', 'png'],
-                    );
-                    if (result != null) {
-                      final tem = result.files.first;
-                      String? extension = tem.extension;
-                      File imageFile = File(tem.path!);
-                      setState(() {
-                        listOfContent.add(SizedBox(
-                          height: 300,
-                          width: MediaQuery.of(context).size.width -
-                              MediaQuery.of(context).size.width / 10,
-                          child: Image.file(imageFile),
-                        ));
-                      });
-                      String uploadePath =
-                          "${widget.contributionArea}/${Random().nextDouble()}.$extension";
-                      final ref =
-                          FirebaseStorage.instance.ref().child(uploadePath);
-                      UploadTask uploadTask;
-                      uploadTask = ref.putFile(imageFile);
-                      final snapshot = await uploadTask.whenComplete(() {});
-                      String url = await snapshot.ref.getDownloadURL();
-                      json.addAll({
-                        "$count": {"doc": url, "type": "image", "loc": "fire"}
-                      });
-                      count++;
-                    }
+                    pickPhotoMobile(
+                            "${widget.contributionArea}/${Random().nextDouble()}")
+                        .then((value) {
+                      File? imageFile = value.imageFile;
+                      String? url = value.url;
+                      if (imageFile != null && url != null) {
+                        setState(() {
+                          listOfContent.add(SizedBox(
+                            height: 300,
+                            width: MediaQuery.of(context).size.width -
+                                MediaQuery.of(context).size.width / 10,
+                            child: Image.file(imageFile),
+                          ));
+                        });
+                        json.addAll({
+                          "$count": {"doc": url, "type": "image", "loc": "fire"}
+                        });
+                        count++;
+                      }
+                    });
                   }
                   if (kIsWeb) {
-                    FilePickerResult? result = await FilePicker.platform
-                        .pickFiles(
-                            type: FileType.custom,
-                            allowMultiple: false,
-                            allowCompression: true,
-                            allowedExtensions: ['jpg', 'png']);
-
-                    if (result != null) {
-                      final tem = result.files.first;
-                      Uint8List? selectedImage = tem.bytes;
-                      String? extension = tem.extension;
-                      setState(() {
-                        listOfContent.add(Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.60,
-                            width: MediaQuery.of(context).size.width,
-                            child: Image.memory(selectedImage!),
-                          ),
-                        ));
-                      });
-                      String uploadePath =
-                          "${widget.contributionArea}/${Random().nextDouble()}.$extension";
-                      final ref =
-                          FirebaseStorage.instance.ref().child(uploadePath);
-                      UploadTask uploadTask;
-                      final metadata =
-                          SettableMetadata(contentType: 'image/jpeg');
-                      uploadTask = ref.putData(selectedImage!, metadata);
-                      final snapshot = await uploadTask.whenComplete(() {});
-                      String url = await snapshot.ref.getDownloadURL();
-                      json.addAll({
-                        "$count": {"doc": url, "type": "image", "loc": "fire"}
-                      });
-                      count++;
-                    }
+                    pickPhotoWeb(
+                            "${widget.contributionArea}/${Random().nextDouble()}")
+                        .then((value) {
+                      Uint8List? imageFile = value.imageFile;
+                      String? url = value.url;
+                      if (imageFile != null && url != null) {
+                        setState(() {
+                          listOfContent.add(SizedBox(
+                            height: 300,
+                            width: MediaQuery.of(context).size.width -
+                                MediaQuery.of(context).size.width / 10,
+                            child: Image.memory(imageFile),
+                          ));
+                        });
+                        json.addAll({
+                          "$count": {"doc": url, "type": "image", "loc": "fire"}
+                        });
+                        count++;
+                      }
+                    });
                   }
                 },
               ),
