@@ -1,12 +1,17 @@
 import "dart:convert";
 import "dart:io";
 
+import "package:flutter/cupertino.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:flutter_quill/flutter_quill.dart" hide Text;
-import "package:tpiprogrammingclub/core/image_picker.dart";
+import "../../core/image_picker.dart";
+import "code_colors.dart";
+import "../../core/show_toast.dart";
 import "../../theme/change_button_theme.dart";
 import "../../theme/my_colors_icons.dart";
+import "../home/home_page.dart";
 
 class PostEditor extends StatefulWidget {
   const PostEditor({super.key});
@@ -75,6 +80,115 @@ class _PostEditorState extends State<PostEditor> {
     }
   }
 
+  void addCode(String code, String language) {
+    List<InlineSpan> spanList = [];
+    // the most complex RegExp ever i made
+    RegExp pattern = RegExp(
+        r'''(?:\/\/[^\n]*)|(?:#[^\n]*)|(\b\w+\b|\s+|(['"])(?:(?!\2).|\\\2)*\2|[{}()\[\],.;?!`<>*^%$#@&"'+-=])''');
+    Iterable<Match> matches = pattern.allMatches(code);
+    for (Match match in matches) {
+      String word = match.group(0)!;
+      Color color = CodeColors().python(word);
+
+      spanList.add(
+        TextSpan(
+          text: word,
+          style: TextStyle(color: color),
+        ),
+      );
+    }
+    Widget colorsCode = Padding(
+      padding: const EdgeInsets.all(3),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: Colors.lightBlueAccent,
+            width: 3,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    CircleAvatar(
+                      radius: 4,
+                      backgroundColor: Colors.red,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    CircleAvatar(
+                      radius: 4,
+                      backgroundColor: Colors.yellow,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    CircleAvatar(
+                      radius: 4,
+                      backgroundColor: Colors.green,
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 7),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: elevatedStyle,
+                      backgroundColor: Colors.blueGrey,
+                    ),
+                    onPressed: () {
+                      Clipboard.setData(
+                        ClipboardData(
+                          text: code,
+                        ),
+                      );
+                      showToast("Copied Successful!");
+                    },
+                    child: const Row(
+                      children: [
+                        Text('Copy'),
+                        Icon(Icons.copy),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 2,
+            ),
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: RichText(
+                  text: TextSpan(
+                      style: const TextStyle(fontFamily: "monospace"),
+                      children: spanList),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    setState(() {
+      contentPreView.add(colorsCode);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,6 +215,151 @@ class _PostEditorState extends State<PostEditor> {
                 ),
                 customButtons: [
                   QuillCustomButton(
+                      onTap: () {
+                        List<DropdownMenuItem<String>> items = [
+                          const DropdownMenuItem(
+                            value: 'language',
+                            child: Text('Language'),
+                          ),
+                          const DropdownMenuItem(
+                            value: 'python',
+                            child: Text('Python'),
+                          ),
+                          const DropdownMenuItem(
+                            value: 'java',
+                            child: Text('Java'),
+                          ),
+                          const DropdownMenuItem(
+                            value: 'javascript',
+                            child: Text('Java Script'),
+                          ),
+                          const DropdownMenuItem(
+                            value: 'c++',
+                            child: Text('C++'),
+                          ),
+                          const DropdownMenuItem(
+                            value: 'c',
+                            child: Text('C'),
+                          ),
+                        ];
+                        String language = 'language';
+
+                        insertQuillData();
+                        final codeController = TextEditingController();
+                        showCupertinoModalPopup(
+                          context: context,
+                          builder: (context) => Center(
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width > 1000
+                                  ? MediaQuery.of(context).size.width * 0.70
+                                  : MediaQuery.of(context).size.width * 0.95,
+                              height: MediaQuery.of(context).size.height * 0.70,
+                              child: Scaffold(
+                                body: ListView(
+                                  padding: const EdgeInsets.all(10),
+                                  children: [
+                                    TextFormField(
+                                      controller: codeController,
+                                      autocorrect: false,
+                                      maxLines: 1000,
+                                      minLines: 13,
+                                      decoration: InputDecoration(
+                                        errorStyle: const TextStyle(
+                                            color: Colors.redAccent,
+                                            fontWeight: FontWeight.bold),
+                                        labelText: "Code",
+                                        hintText: "Type your Code...",
+                                        border: MyColorsIcons
+                                            .outLinedBorderForTextFromFeild,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        DropdownButton<String>(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          value: language,
+                                          items: items,
+                                          onChanged: (newValue) {
+                                            setState(() {
+                                              language = newValue!;
+                                            });
+                                          },
+                                        ),
+                                        const Spacer(),
+                                        TextButton.icon(
+                                          icon: const Icon(
+                                            Icons.cancel_outlined,
+                                            color: MyColorsIcons.gradient2,
+                                          ),
+                                          onPressed: () {
+                                            if (Navigator.canPop(context)) {
+                                              Navigator.pop(context);
+                                            }
+                                          },
+                                          label: const Text(
+                                            "Cancel",
+                                            style: TextStyle(
+                                              color: MyColorsIcons.gradient2,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 25,
+                                        ),
+                                        TextButton.icon(
+                                          icon: const Icon(
+                                            Icons.done,
+                                            color: MyColorsIcons.gradient2,
+                                          ),
+                                          onPressed: () {
+                                            if (language != 'language') {
+                                              if (codeController.text
+                                                  .trim()
+                                                  .isEmpty) {
+                                                showToast("Code is empty");
+                                                return;
+                                              }
+                                              addCode(codeController.text,
+                                                  language);
+                                              if (Navigator.canPop(context)) {
+                                                Navigator.pop(context);
+                                              }
+                                            } else {
+                                              showToast(
+                                                  "Pleage select a language");
+                                            }
+                                          },
+                                          label: const Text(
+                                            "Ok",
+                                            style: TextStyle(
+                                              color: MyColorsIcons.gradient2,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        color: Colors.black26,
+                        padding: const EdgeInsets.all(3),
+                        child: const Icon(Icons.code),
+                      )),
+                  QuillCustomButton(
                     child: Container(
                       padding: const EdgeInsets.all(3),
                       color: Colors.black26,
@@ -124,7 +383,7 @@ class _PostEditorState extends State<PostEditor> {
                               int timeEpoch =
                                   DateTime.now().millisecondsSinceEpoch;
                               if (!kIsWeb) {
-                                pickPhotoMobile("post/$timeEpoch")
+                                await pickPhotoMobile("post/$timeEpoch")
                                     .then((value) {
                                   File? image = value.imageFile;
                                   String? url = value.url;
@@ -166,7 +425,8 @@ class _PostEditorState extends State<PostEditor> {
                                   }
                                 });
                               } else {
-                                pickPhotoWeb("post/$timeEpoch").then((value) {
+                                await pickPhotoWeb("post/$timeEpoch")
+                                    .then((value) {
                                   Uint8List? image = value.imageFile;
                                   String? url = value.url;
                                   if (image != null && url != null) {
@@ -221,20 +481,19 @@ class _PostEditorState extends State<PostEditor> {
                             ),
                             onTap: () {},
                           ),
-                          PopupMenuItem<String>(
-                            child: const Row(
-                              children: [
-                                Icon(Icons.code),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text('Insert Code'),
-                              ],
-                            ),
-                            onTap: () {
-                              insertQuillData();
-                            },
-                          ),
+                          // PopupMenuItem<String>(
+                          //   child: const Row(
+                          //     children: [
+                          //       Icon(Icons.code),
+                          //       SizedBox(
+                          //         width: 10,
+                          //       ),
+                          //       Text('Insert Code'),
+                          //     ],
+                          //   ),
+                          //   onTap: () {
+                          //   },
+                          // ),
                         ],
                       ),
                     ),
