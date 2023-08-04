@@ -8,7 +8,7 @@ class ThemeProvider extends ChangeNotifier {
   String themeLabel = "System";
   int themeValue = 0;
   Icon themeIcon = const Icon(
-    Icons.brightness_4,
+    Icons.brightness_4_outlined,
   );
 
   void toggleTheme(int value) {

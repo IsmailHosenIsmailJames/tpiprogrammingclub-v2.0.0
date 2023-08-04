@@ -1,9 +1,9 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
+import 'package:tpiprogrammingclub/theme/my_colors_icons.dart';
 
 import '../../theme/change_button_theme.dart';
-import 'login_form_feild.dart';
-import '../welcome.dart';
+import '../signin/signup.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -13,98 +13,172 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  FocusNode passwordFocusNode = FocusNode();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  final validationKey = GlobalKey<FormState>();
+
+  void logIn() async {
+    if (validationKey.currentState!.validate()) {
+      // TO DO
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ScreenTypeLayout.builder(
-        // desktop layouts
-        desktop: (p0) => ListView(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            width: 400,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(50, 150, 150, 150),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.info_outline),
-                  label: const Text(
-                    "About",
+                Row(
+                  children: [
+                    const Spacer(),
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: MyColorsIcons.gradient2,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(40),
+                        ),
+                      ),
+                      height: 70,
+                      width: 70,
+                      child: const ChangeThemeButtonWidget(value: 1),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 10,
+                    left: 10,
+                    bottom: 30,
+                  ),
+                  child: Form(
+                    key: validationKey,
+                    child: Column(
+                      children: [
+                        const Text(
+                          "Login",
+                          style: TextStyle(
+                            color: MyColorsIcons.gradient2,
+                            fontSize: 40,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        TextFormField(
+                          onEditingComplete: () {
+                            FocusScope.of(context)
+                                .requestFocus(passwordFocusNode);
+                          },
+                          validator: (value) {
+                            if (EmailValidator.validate(value!)) {
+                              return null;
+                            } else {
+                              return "আপনার ইমেইলটি সঠিক নয় ...";
+                            }
+                          },
+                          controller: email,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(width: 3),
+                            ),
+                            labelText: "Email",
+                            hintText: "আপনার ইমেইলটি এখানে লিখুন ...",
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        TextFormField(
+                          onEditingComplete: () {
+                            logIn();
+                          },
+                          validator: (value) {
+                            if (value!.length >= 8) {
+                              return null;
+                            } else {
+                              return "পাসওয়ার্ড সর্বনিম্ন ৮ সংখ্যার হতে হবে ...";
+                            }
+                          },
+                          controller: password,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          focusNode: passwordFocusNode,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(width: 3),
+                            ),
+                            labelText: "Password",
+                            hintText: "আপনার পাসওয়ার্ড এখানে লিখুন ...",
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            maximumSize: const Size(380, 50),
+                            minimumSize: const Size(380, 50),
+                            backgroundColor: MyColorsIcons.gradient2,
+                          ),
+                          onPressed: () {
+                            logIn();
+                          },
+                          child: const Text(
+                            "LogIn",
+                            style: TextStyle(fontSize: 26),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text("Haven't account?"),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignUp(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                "SignUp",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: MyColorsIcons.gradient2),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.feedback_outlined),
-                  label: const Text(
-                    "Feed Back",
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                const ChangeThemeButtonWidget(value: 1),
               ],
             ),
-            const SizedBox(
-              height: 50,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(80, 139, 139, 139),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const WelcomeLogIn(),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(80, 139, 139, 139),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const LogInForm(),
-                ),
-              ],
-            ),
-          ],
-        ),
-        mobile: (p0) => ListView(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.info_outline),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.feedback_outlined),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                const ChangeThemeButtonWidget(value: 1),
-              ],
-            ),
-            Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.90,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(80, 139, 139, 139),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const LogInForm(),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

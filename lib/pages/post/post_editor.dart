@@ -11,7 +11,6 @@ import "code_colors.dart";
 import "../../core/show_toast.dart";
 import "../../theme/change_button_theme.dart";
 import "../../theme/my_colors_icons.dart";
-import "../home/home_page.dart";
 
 class PostEditor extends StatefulWidget {
   const PostEditor({super.key});
@@ -142,10 +141,23 @@ class _PostEditorState extends State<PostEditor> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 7),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: elevatedStyle,
-                      backgroundColor: Colors.blueGrey,
+                  child: OutlinedButton.icon(
+                    icon: const Icon(
+                      Icons.copy_all,
+                      color: MyColorsIcons.gradient2,
+                    ),
+                    label: const Text(
+                      "Copy",
+                      style: TextStyle(
+                        color: MyColorsIcons.gradient2,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(
+                          color: MyColorsIcons.gradient2, width: 2),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                     onPressed: () {
                       Clipboard.setData(
@@ -155,12 +167,6 @@ class _PostEditorState extends State<PostEditor> {
                       );
                       showToast("Copied Successful!");
                     },
-                    child: const Row(
-                      children: [
-                        Text('Copy'),
-                        Icon(Icons.copy),
-                      ],
-                    ),
                   ),
                 ),
               ],
@@ -173,8 +179,8 @@ class _PostEditorState extends State<PostEditor> {
               scrollDirection: Axis.horizontal,
               child: Padding(
                 padding: const EdgeInsets.all(5),
-                child: RichText(
-                  text: TextSpan(
+                child: SelectableText.rich(
+                  TextSpan(
                       style: const TextStyle(fontFamily: "monospace"),
                       children: spanList),
                 ),

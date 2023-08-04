@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../core/show_toast.dart';
-import 'my_colors_icons.dart';
 import 'theme_storage_manager.dart';
 import 'theme_provider.dart';
 
@@ -31,12 +30,7 @@ class ChangeThemeButtonWidget extends StatelessWidget {
         showToast(e.toString());
       }
     }
-    return OutlinedButton.icon(
-      style: ElevatedButton.styleFrom(
-        side: MyColorsIcons.outlineBorder,
-        minimumSize: const Size(120, 40),
-        backgroundColor: Colors.black,
-      ),
+    return IconButton(
       onPressed: () {
         if (themeProvider.themeValue == 0) {
           final provider = Provider.of<ThemeProvider>(context, listen: false);
@@ -50,10 +44,6 @@ class ChangeThemeButtonWidget extends StatelessWidget {
         }
       },
       icon: themeProvider.themeIcon,
-      label: Text(
-        themeProvider.themeLabel,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
     );
   }
 }

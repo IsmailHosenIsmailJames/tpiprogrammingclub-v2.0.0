@@ -87,4 +87,9 @@ class CodeColors {
     }
     return const Color.fromARGB(255, 150, 207, 255);
   }
+
+  void dart() {
+    
+  }
 }
+

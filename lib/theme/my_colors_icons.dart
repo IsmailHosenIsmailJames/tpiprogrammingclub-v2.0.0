@@ -12,13 +12,13 @@ class MyColorsIcons {
   static BorderSide outlineBorder =
       const BorderSide(color: gradient2, width: 2);
   static Icon systemIcon = const Icon(
-    Icons.brightness_4,
+    Icons.brightness_4_outlined,
   );
   static Icon darkIcon = const Icon(
     Icons.dark_mode_outlined,
   );
   static Icon sunnyIcon = const Icon(
-    Icons.wb_sunny,
+    Icons.wb_sunny_outlined,
   );
   static RoundedRectangleBorder textFromFieldBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(10),

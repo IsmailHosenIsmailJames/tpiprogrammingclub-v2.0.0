@@ -1,9 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
+import 'dart:io';
 
+import 'package:email_validator/email_validator.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:tpiprogrammingclub/auth/signin/sent_user_data_server.dart';
+
+import '../../core/image_picker.dart';
+import '../../core/show_toast.dart';
 import '../../theme/change_button_theme.dart';
-import '../welcome.dart';
-import 'signup_form.dart';
+import '../../theme/my_colors_icons.dart';
+import '../init_state.dart';
+import '../login/login.dart';
+import '../sent_validation_email.dart';
+import 'create_user.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -13,98 +22,375 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignInState extends State<SignUp> {
+  bool isSecureText = true;
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
+  final conPassController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  String? url = "";
+  File? picForMobile;
+  Uint8List? picForWeb;
+  Widget profileAvatar = const Icon(Icons.person, size: 80);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ScreenTypeLayout.builder(
-        // desktop layouts
-        desktop: (p0) => ListView(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            width: 400,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(50, 150, 150, 150),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.info_outline),
-                  label: const Text(
-                    "About",
+                Row(
+                  children: [
+                    const Spacer(),
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: MyColorsIcons.gradient2,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(40),
+                        ),
+                      ),
+                      height: 70,
+                      width: 70,
+                      child: const ChangeThemeButtonWidget(value: 1),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 10,
+                    left: 10,
+                    bottom: 30,
+                  ),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Text(
+                          "Sign Up",
+                          style: TextStyle(
+                            color: MyColorsIcons.gradient2,
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                              radius: 70,
+                              backgroundColor: MyColorsIcons.gradient2,
+                              child: profileAvatar,
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: nameController,
+                            autocorrect: false,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value!.length > 1) {
+                                return null;
+                              } else {
+                                return "Name is not validate.";
+                              }
+                            },
+                            decoration: InputDecoration(
+                              errorStyle: const TextStyle(
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.bold),
+                              labelText: "Name",
+                              hintText: "Type your nameController...",
+                              border:
+                                  MyColorsIcons.outLinedBorderForTextFromFeild,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: emailController,
+                            autocorrect: false,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (EmailValidator.validate(value!.trim())) {
+                                return null;
+                              } else {
+                                return "Email is not validate.";
+                              }
+                            },
+                            decoration: InputDecoration(
+                              errorStyle: const TextStyle(
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.bold),
+                              labelText: "Email",
+                              hintText: "Type your email...",
+                              border:
+                                  MyColorsIcons.outLinedBorderForTextFromFeild,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: passController,
+                                  validator: (value) {
+                                    if (value!.length >= 8) {
+                                      return null;
+                                    } else {
+                                      return "Password is short";
+                                    }
+                                  },
+                                  autocorrect: false,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  obscureText: isSecureText,
+                                  decoration: InputDecoration(
+                                    errorStyle: const TextStyle(
+                                        color: Colors.redAccent,
+                                        fontWeight: FontWeight.bold),
+                                    labelText: "Password",
+                                    hintText: "Type your password...",
+                                    border: MyColorsIcons
+                                        .outLinedBorderForTextFromFeild,
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isSecureText = !isSecureText;
+                                  });
+                                },
+                                icon: isSecureText
+                                    ? const Icon(
+                                        Icons.visibility_off,
+                                        color: MyColorsIcons.gradient2,
+                                      )
+                                    : const Icon(
+                                        Icons.visibility,
+                                        color: MyColorsIcons.gradient2,
+                                      ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: passController,
+                                  validator: (value) {
+                                    if (value! == passController.text) {
+                                      return null;
+                                    } else {
+                                      return "Password didn't massed";
+                                    }
+                                  },
+                                  autocorrect: false,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  obscureText: isSecureText,
+                                  decoration: InputDecoration(
+                                    errorStyle: const TextStyle(
+                                        color: Colors.redAccent,
+                                        fontWeight: FontWeight.bold),
+                                    labelText: "Confirm Password",
+                                    hintText: "Type your password again...",
+                                    border: MyColorsIcons
+                                        .outLinedBorderForTextFromFeild,
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isSecureText = !isSecureText;
+                                  });
+                                },
+                                icon: isSecureText
+                                    ? const Icon(
+                                        Icons.visibility_off,
+                                        color: MyColorsIcons.gradient2,
+                                      )
+                                    : const Icon(
+                                        Icons.visibility,
+                                        color: MyColorsIcons.gradient2,
+                                      ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: OutlinedButton(
+                            onPressed: () async {
+                              if (formKey.currentState!.validate()) {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => const Center(
+                                    child: CircularProgressIndicator(
+                                      color: MyColorsIcons.gradient2,
+                                    ),
+                                  ),
+                                );
+
+                                if (!kIsWeb) {
+                                  await pickPhotoMobile(
+                                          "user/${emailController.text.trim()}")
+                                      .then((value) {
+                                    setState(() {
+                                      url = value.url;
+                                      picForMobile = value.imageFile;
+                                    });
+                                  });
+                                } else {
+                                  await pickPhotoWeb(
+                                          "user/${emailController.text.trim()}")
+                                      .then((value) {
+                                    setState(() {
+                                      url = value.url;
+                                      picForWeb = value.imageFile;
+                                    });
+                                  });
+                                }
+                                // ignore: use_build_context_synchronously
+                                if (Navigator.canPop(context)) {
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.pop(context);
+                                }
+                                if (url == null) {
+                                  showToast("Please select a profile.");
+                                  return;
+                                } else {
+                                  showToast("Image Upload Successful!");
+                                  setState(() {
+                                    if (picForMobile != null) {
+                                      profileAvatar = Image.file(
+                                        picForMobile!,
+                                        fit: BoxFit.cover,
+                                      );
+                                    } else if (picForWeb != null) {
+                                      profileAvatar = Image.memory(
+                                        picForWeb!,
+                                        fit: BoxFit.cover,
+                                      );
+                                    }
+                                  });
+                                }
+                              }
+                            },
+                            child: const Text(
+                              "Browse Photo ...",
+                              style: TextStyle(color: MyColorsIcons.gradient2),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: MyColorsIcons.gradient2,
+                              minimumSize: const Size(300, 60)),
+                          onPressed: () async {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) => const Center(
+                                child: CircularProgressIndicator(
+                                  color: MyColorsIcons.gradient2,
+                                ),
+                              ),
+                            );
+                            await createUser(emailController.text.trim(),
+                                passController.text);
+                            await sentUserDataServer(
+                              emailController.text.trim(),
+                              nameController.text.trim(),
+                              url == null ? "" : url!,
+                            );
+                            await sentValidationEmail();
+                            // ignore: use_build_context_synchronously
+                            if (Navigator.canPop(context)) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.pop(context);
+                            }
+                            // ignore: use_build_context_synchronously
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const InItState(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "SignIn",
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text("Already haven account?  "),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LogIn(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                "LogIn",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w900,
+                                  color: MyColorsIcons.gradient2,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.feedback_outlined),
-                  label: const Text(
-                    "Feed Back",
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                const ChangeThemeButtonWidget(value: 1),
               ],
             ),
-            const SizedBox(
-              height: 50,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(80, 139, 139, 139),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const WelcomeLogIn(),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(80, 139, 139, 139),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const SignUpForm(),
-                ),
-              ],
-            ),
-          ],
-        ),
-        mobile: (p0) => ListView(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.info_outline),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.feedback_outlined),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                const ChangeThemeButtonWidget(value: 1),
-              ],
-            ),
-            Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.90,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(80, 139, 139, 139),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const SignUpForm(),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
