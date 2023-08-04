@@ -111,7 +111,7 @@ class _LogInState extends State<LogIn> {
                             if (value!.length >= 8) {
                               return null;
                             } else {
-                              return "পাসওয়ার্ড সর্বনিম্ন ৮ সংখ্যার হতে হবে ...";
+                              return "Password is must 8 digits...";
                             }
                           },
                           controller: password,
@@ -123,7 +123,7 @@ class _LogInState extends State<LogIn> {
                               borderSide: const BorderSide(width: 3),
                             ),
                             labelText: "Password",
-                            hintText: "আপনার পাসওয়ার্ড এখানে লিখুন ...",
+                            hintText: "Type your password again...",
                           ),
                         ),
                         const SizedBox(

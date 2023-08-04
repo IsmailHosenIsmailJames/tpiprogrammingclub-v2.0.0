@@ -28,10 +28,45 @@ class _SignInState extends State<SignUp> {
   final conPassController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
+  FocusNode emailFocus = FocusNode();
+  FocusNode passwordFocus = FocusNode();
+  FocusNode confirmPasswordFocus = FocusNode();
+
   String? url = "";
   File? picForMobile;
   Uint8List? picForWeb;
   Widget profileAvatar = const Icon(Icons.person, size: 80);
+
+  void signUp() async {
+    if (formKey.currentState!.validate()) {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(
+            color: MyColorsIcons.gradient2,
+          ),
+        ),
+      );
+      await createUser(emailController.text.trim(), passController.text);
+      await sentUserDataServer(
+        emailController.text.trim(),
+        nameController.text.trim(),
+        url == null ? "" : url!,
+      );
+      await sentValidationEmail();
+      // ignore: use_build_context_synchronously
+      if (Navigator.canPop(context)) {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+      }
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const InItState(),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +151,9 @@ class _SignInState extends State<SignUp> {
                                 return "Name is not validate.";
                               }
                             },
+                            onEditingComplete: () {
+                              FocusScope.of(context).requestFocus(emailFocus);
+                            },
                             decoration: InputDecoration(
                               errorStyle: const TextStyle(
                                   color: Colors.redAccent,
@@ -130,6 +168,7 @@ class _SignInState extends State<SignUp> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                            focusNode: emailFocus,
                             controller: emailController,
                             autocorrect: false,
                             autovalidateMode:
@@ -140,6 +179,10 @@ class _SignInState extends State<SignUp> {
                               } else {
                                 return "Email is not validate.";
                               }
+                            },
+                            onEditingComplete: () {
+                              FocusScope.of(context)
+                                  .requestFocus(passwordFocus);
                             },
                             decoration: InputDecoration(
                               errorStyle: const TextStyle(
@@ -158,6 +201,7 @@ class _SignInState extends State<SignUp> {
                             children: [
                               Expanded(
                                 child: TextFormField(
+                                  focusNode: passwordFocus,
                                   controller: passController,
                                   validator: (value) {
                                     if (value!.length >= 8) {
@@ -165,6 +209,10 @@ class _SignInState extends State<SignUp> {
                                     } else {
                                       return "Password is short";
                                     }
+                                  },
+                                  onEditingComplete: () {
+                                    FocusScope.of(context)
+                                        .requestFocus(confirmPasswordFocus);
                                   },
                                   autocorrect: false,
                                   autovalidateMode:
@@ -206,13 +254,17 @@ class _SignInState extends State<SignUp> {
                             children: [
                               Expanded(
                                 child: TextFormField(
-                                  controller: passController,
+                                  focusNode: confirmPasswordFocus,
+                                  controller: conPassController,
                                   validator: (value) {
                                     if (value! == passController.text) {
                                       return null;
                                     } else {
                                       return "Password didn't massed";
                                     }
+                                  },
+                                  onEditingComplete: () {
+                                    signUp();
                                   },
                                   autocorrect: false,
                                   autovalidateMode:
@@ -321,33 +373,7 @@ class _SignInState extends State<SignUp> {
                               backgroundColor: MyColorsIcons.gradient2,
                               minimumSize: const Size(300, 60)),
                           onPressed: () async {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (context) => const Center(
-                                child: CircularProgressIndicator(
-                                  color: MyColorsIcons.gradient2,
-                                ),
-                              ),
-                            );
-                            await createUser(emailController.text.trim(),
-                                passController.text);
-                            await sentUserDataServer(
-                              emailController.text.trim(),
-                              nameController.text.trim(),
-                              url == null ? "" : url!,
-                            );
-                            await sentValidationEmail();
-                            // ignore: use_build_context_synchronously
-                            if (Navigator.canPop(context)) {
-                              // ignore: use_build_context_synchronously
-                              Navigator.pop(context);
-                            }
-                            // ignore: use_build_context_synchronously
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const InItState(),
-                              ),
-                            );
+                            signUp();
                           },
                           child: const Text(
                             "SignIn",
