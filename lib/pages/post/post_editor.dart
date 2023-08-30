@@ -42,8 +42,9 @@ class _PostEditorState extends State<PostEditor> {
           "$counter": {
             "type": "quill",
             "data": encodedJsonData,
-          }
+          },
         });
+        counter++;
       });
 
       Widget quillWidgetPreWiew = QuillEditor(
@@ -72,14 +73,26 @@ class _PostEditorState extends State<PostEditor> {
         ),
       );
       setState(() {
-        contentPreView.add(quillWidgetPreWiew);
         counter++;
         quillControllerNew.clear();
       });
+      contentPreView.add(quillWidgetPreWiew);
     }
   }
 
   void addCode(String code, String language) {
+    // add code to data
+    setState(() {
+      contentData.addAll({
+        '$counter': {
+          "type": "code",
+          "data": code,
+          "language": language,
+        }
+      });
+      counter++;
+    });
+
     List<InlineSpan> spanList = [];
     // the most complex RegExp ever i made
     RegExp pattern = RegExp(
@@ -87,7 +100,12 @@ class _PostEditorState extends State<PostEditor> {
     Iterable<Match> matches = pattern.allMatches(code);
     for (Match match in matches) {
       String word = match.group(0)!;
-      Color color = CodeColors().python(word);
+      Color color = const Color.fromARGB(255, 99, 206, 255);
+      if (language == 'python') {
+        color = CodeColors().python(word);
+      } else {
+        color = CodeColors().dart(word);
+      }
 
       spanList.add(
         TextSpan(
@@ -190,9 +208,7 @@ class _PostEditorState extends State<PostEditor> {
         ),
       ),
     );
-    setState(() {
-      contentPreView.add(colorsCode);
-    });
+    contentPreView.add(colorsCode);
   }
 
   @override
@@ -221,289 +237,349 @@ class _PostEditorState extends State<PostEditor> {
                 ),
                 customButtons: [
                   QuillCustomButton(
-                      onTap: () {
-                        List<DropdownMenuItem<String>> items = [
-                          const DropdownMenuItem(
-                            value: 'language',
-                            child: Text('Language'),
-                          ),
-                          const DropdownMenuItem(
-                            value: 'python',
-                            child: Text('Python'),
-                          ),
-                          const DropdownMenuItem(
-                            value: 'java',
-                            child: Text('Java'),
-                          ),
-                          const DropdownMenuItem(
-                            value: 'javascript',
-                            child: Text('Java Script'),
-                          ),
-                          const DropdownMenuItem(
-                            value: 'c++',
-                            child: Text('C++'),
-                          ),
-                          const DropdownMenuItem(
-                            value: 'c',
-                            child: Text('C'),
-                          ),
-                        ];
-                        String language = 'language';
+                    tooltip: "insert code",
+                    onTap: () {
+                      List<DropdownMenuItem<String>> items = [
+                        const DropdownMenuItem(
+                          value: 'language',
+                          child: Text('Language'),
+                        ),
+                        const DropdownMenuItem(
+                          value: 'python',
+                          child: Text('Python'),
+                        ),
+                        const DropdownMenuItem(
+                          value: 'java',
+                          child: Text('Java'),
+                        ),
+                        const DropdownMenuItem(
+                          value: 'javascript',
+                          child: Text('Java Script'),
+                        ),
+                        const DropdownMenuItem(
+                          value: 'c++',
+                          child: Text('C++'),
+                        ),
+                        const DropdownMenuItem(
+                          value: 'c',
+                          child: Text('C'),
+                        ),
+                      ];
+                      String language = 'language';
 
-                        insertQuillData();
-                        final codeController = TextEditingController();
-                        showCupertinoModalPopup(
-                          context: context,
-                          builder: (context) => Center(
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width > 1000
-                                  ? MediaQuery.of(context).size.width * 0.70
-                                  : MediaQuery.of(context).size.width * 0.95,
-                              height: MediaQuery.of(context).size.height * 0.70,
-                              child: Scaffold(
-                                body: ListView(
-                                  padding: const EdgeInsets.all(10),
-                                  children: [
-                                    TextFormField(
-                                      controller: codeController,
-                                      autocorrect: false,
-                                      maxLines: 1000,
-                                      minLines: 13,
-                                      decoration: InputDecoration(
-                                        errorStyle: const TextStyle(
-                                            color: Colors.redAccent,
-                                            fontWeight: FontWeight.bold),
-                                        labelText: "Code",
-                                        hintText: "Type your Code...",
-                                        border: MyColorsIcons
-                                            .outLinedBorderForTextFromFeild,
+                      insertQuillData();
+                      final codeController = TextEditingController();
+                      showCupertinoModalPopup(
+                        context: context,
+                        builder: (context) => Center(
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width > 1000
+                                ? MediaQuery.of(context).size.width * 0.70
+                                : MediaQuery.of(context).size.width * 0.95,
+                            height: MediaQuery.of(context).size.height * 0.70,
+                            child: Scaffold(
+                              body: ListView(
+                                padding: const EdgeInsets.all(10),
+                                children: [
+                                  TextFormField(
+                                    controller: codeController,
+                                    autocorrect: false,
+                                    maxLines: 1000,
+                                    minLines: 13,
+                                    decoration: InputDecoration(
+                                      errorStyle: const TextStyle(
+                                          color: Colors.redAccent,
+                                          fontWeight: FontWeight.bold),
+                                      labelText: "Code",
+                                      hintText: "Type your Code...",
+                                      border: MyColorsIcons
+                                          .outLinedBorderForTextFromFeild,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      DropdownButton<String>(
+                                        borderRadius: BorderRadius.circular(10),
+                                        value: language,
+                                        items: items,
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            language = newValue!;
+                                          });
+                                        },
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        DropdownButton<String>(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          value: language,
-                                          items: items,
-                                          onChanged: (newValue) {
-                                            setState(() {
-                                              language = newValue!;
-                                            });
-                                          },
+                                      const Spacer(),
+                                      TextButton.icon(
+                                        icon: const Icon(
+                                          Icons.cancel_outlined,
+                                          color: MyColorsIcons.gradient2,
                                         ),
-                                        const Spacer(),
-                                        TextButton.icon(
-                                          icon: const Icon(
-                                            Icons.cancel_outlined,
+                                        onPressed: () {
+                                          if (Navigator.canPop(context)) {
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                        label: const Text(
+                                          "Cancel",
+                                          style: TextStyle(
                                             color: MyColorsIcons.gradient2,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          onPressed: () {
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 25,
+                                      ),
+                                      TextButton.icon(
+                                        icon: const Icon(
+                                          Icons.done,
+                                          color: MyColorsIcons.gradient2,
+                                        ),
+                                        onPressed: () {
+                                          if (language != 'language') {
+                                            if (codeController.text
+                                                .trim()
+                                                .isEmpty) {
+                                              showToast("Code is empty");
+                                              return;
+                                            }
+                                            addCode(
+                                                codeController.text, language);
                                             if (Navigator.canPop(context)) {
                                               Navigator.pop(context);
                                             }
-                                          },
-                                          label: const Text(
-                                            "Cancel",
-                                            style: TextStyle(
-                                              color: MyColorsIcons.gradient2,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 25,
-                                        ),
-                                        TextButton.icon(
-                                          icon: const Icon(
-                                            Icons.done,
+                                          } else {
+                                            showToast(
+                                                "Pleage select a language");
+                                          }
+                                        },
+                                        label: const Text(
+                                          "Ok",
+                                          style: TextStyle(
                                             color: MyColorsIcons.gradient2,
-                                          ),
-                                          onPressed: () {
-                                            if (language != 'language') {
-                                              if (codeController.text
-                                                  .trim()
-                                                  .isEmpty) {
-                                                showToast("Code is empty");
-                                                return;
-                                              }
-                                              addCode(codeController.text,
-                                                  language);
-                                              if (Navigator.canPop(context)) {
-                                                Navigator.pop(context);
-                                              }
-                                            } else {
-                                              showToast(
-                                                  "Pleage select a language");
-                                            }
-                                          },
-                                          label: const Text(
-                                            "Ok",
-                                            style: TextStyle(
-                                              color: MyColorsIcons.gradient2,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                      ],
-                                    )
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
                             ),
                           ),
-                        );
-                      },
-                      child: Container(
-                        color: Colors.black26,
-                        padding: const EdgeInsets.all(3),
-                        child: const Icon(Icons.code),
-                      )),
-                  QuillCustomButton(
+                        ),
+                      );
+                    },
                     child: Container(
-                      padding: const EdgeInsets.all(3),
                       color: Colors.black26,
-                      child: PopupMenuButton<String>(
-                        child: const Icon(Icons.more_horiz),
-                        itemBuilder: (BuildContext context) =>
-                            <PopupMenuEntry<String>>[
-                          PopupMenuItem<String>(
-                            child: const Row(
-                              children: [
-                                Icon(Icons.image),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text('Insert Image'),
-                              ],
-                            ),
-                            onTap: () async {
-                              insertQuillData();
-
-                              int timeEpoch =
-                                  DateTime.now().millisecondsSinceEpoch;
-                              if (!kIsWeb) {
-                                await pickPhotoMobile("post/$timeEpoch")
-                                    .then((value) {
-                                  File? image = value.imageFile;
-                                  String? url = value.url;
-                                  if (image != null && url != null) {
-                                    setState(() {
-                                      contentData.addAll({
-                                        "$counter": {
-                                          "type": "image",
-                                          "data": url,
-                                        }
-                                      });
-                                    });
-                                    Widget imageWidgetPreView = Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(
-                                                0.5), // Shadow color
-                                            spreadRadius: 2, // Spread radius
-                                            blurRadius: 5, // Blur radius
-                                            offset: const Offset(0,
-                                                3), // Offset in x and y direction
-                                          ),
-                                        ],
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                            10), // Optional: Match the container's border radius
-                                        child: Image.file(
-                                          image,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    );
-                                    setState(() {
-                                      contentPreView.add(imageWidgetPreView);
-                                    });
-                                  }
-                                });
-                              } else {
-                                await pickPhotoWeb("post/$timeEpoch")
-                                    .then((value) {
-                                  Uint8List? image = value.imageFile;
-                                  String? url = value.url;
-                                  if (image != null && url != null) {
-                                    setState(() {
-                                      contentData.addAll({
-                                        "$counter": {
-                                          "type": "image",
-                                          "data": url,
-                                        }
-                                      });
-                                    });
-                                    Widget imageWidgetPreView = Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(
-                                                0.5), // Shadow color
-                                            spreadRadius: 2, // Spread radius
-                                            blurRadius: 5, // Blur radius
-                                            offset: const Offset(0,
-                                                3), // Offset in x and y direction
-                                          ),
-                                        ],
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                            10), // Optional: Match the container's border radius
-                                        child: Image.memory(
-                                          image,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    );
-                                    setState(() {
-                                      contentPreView.add(imageWidgetPreView);
-                                    });
-                                  }
-                                });
-                              }
-                            },
-                          ),
-                          PopupMenuItem<String>(
-                            child: const Row(
-                              children: [
-                                Icon(Icons.link),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text('Insert Linked Iamge'),
-                              ],
-                            ),
-                            onTap: () {},
-                          ),
-                          // PopupMenuItem<String>(
-                          //   child: const Row(
-                          //     children: [
-                          //       Icon(Icons.code),
-                          //       SizedBox(
-                          //         width: 10,
-                          //       ),
-                          //       Text('Insert Code'),
-                          //     ],
-                          //   ),
-                          //   onTap: () {
-                          //   },
-                          // ),
-                        ],
-                      ),
+                      padding: const EdgeInsets.all(3),
+                      child: const Icon(Icons.code),
                     ),
                   ),
+                  QuillCustomButton(
+                    tooltip: "insert image",
+                    child: Container(
+                      color: Colors.black26,
+                      padding: const EdgeInsets.all(3),
+                      child: const Icon(Icons.image_outlined),
+                    ),
+                    onTap: () async {
+                      insertQuillData();
+
+                      int timeEpoch = DateTime.now().millisecondsSinceEpoch;
+                      if (!kIsWeb) {
+                        await pickPhotoMobile("post/$timeEpoch").then((value) {
+                          File? image = value.imageFile;
+                          String? url = value.url;
+                          if (image != null && url != null) {
+                            setState(() {
+                              contentData.addAll({
+                                "$counter": {
+                                  "type": "image",
+                                  "data": url,
+                                }
+                              });
+                            });
+                            Widget imageWidgetPreView = Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                    color: Colors.grey
+                                        .withOpacity(0.5), // Shadow color
+                                    spreadRadius: 2, // Spread radius
+                                    blurRadius: 5, // Blur radius
+                                    offset: const Offset(
+                                        0, 3), // Offset in x and y direction
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                    10), // Optional: Match the container's border radius
+                                child: Image.file(
+                                  image,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            );
+                            contentPreView.add(imageWidgetPreView);
+                          }
+                        });
+                      } else {
+                        await pickPhotoWeb("post/$timeEpoch").then((value) {
+                          Uint8List? image = value.imageFile;
+                          String? url = value.url;
+                          if (image != null && url != null) {
+                            setState(() {
+                              contentData.addAll({
+                                "$counter": {
+                                  "type": "image",
+                                  "data": url,
+                                }
+                              });
+                            });
+                            Widget imageWidgetPreView = Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                    color: Colors.grey
+                                        .withOpacity(0.5), // Shadow color
+                                    spreadRadius: 2, // Spread radius
+                                    blurRadius: 5, // Blur radius
+                                    offset: const Offset(
+                                        0, 3), // Offset in x and y direction
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                    10), // Optional: Match the container's border radius
+                                child: Image.memory(
+                                  image,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            );
+                            contentPreView.add(imageWidgetPreView);
+                          }
+                        });
+                      }
+                    },
+                  ),
+                  QuillCustomButton(
+                    tooltip: "insert link of image",
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      color: Colors.black26,
+                      padding: const EdgeInsets.all(3),
+                      child: Image.asset('img/linkedImg.png'),
+                    ),
+                    onTap: () {
+                      final TextEditingController temController =
+                          TextEditingController();
+                      showCupertinoModalPopup(
+                        context: context,
+                        builder: (context) => Center(
+                          child: Container(
+                            height: 300,
+                            width: 500,
+                            padding: const EdgeInsets.all(15),
+                            child: Scaffold(
+                              body: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  TextFormField(
+                                    controller: temController,
+                                    decoration: InputDecoration(
+                                        border: MyColorsIcons
+                                            .outLinedBorderForTextFromFeild,
+                                        labelText: "Link",
+                                        hintText: "paste your link here..."),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("Cancel"),
+                                      ),
+                                      const SizedBox(
+                                        width: 25,
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            contentData.addAll({
+                                              '$counter': {
+                                                'type': 'linkedImge',
+                                                'link': temController.text
+                                              }
+                                            });
+                                            counter++;
+                                            //   contentPreView.add(
+                                            //     Container(
+                                            //       decoration: BoxDecoration(
+                                            //         borderRadius:
+                                            //             BorderRadius.circular(10),
+                                            //         boxShadow: <BoxShadow>[
+                                            //           BoxShadow(
+                                            //             color: Colors.grey
+                                            //                 .withOpacity(
+                                            //                     0.5), // Shadow color
+                                            //             spreadRadius:
+                                            //                 2, // Spread radius
+                                            //             blurRadius:
+                                            //                 5, // Blur radius
+                                            //             offset: const Offset(0,
+                                            //                 3), // Offset in x and y direction
+                                            //           ),
+                                            //         ],
+                                            //       ),
+                                            //       child: ClipRRect(
+                                            //         borderRadius:
+                                            //             BorderRadius.circular(
+                                            //                 10), // Optional: Match the container's border radius
+                                            //         child: Image.network(
+                                            //           textEditingController.text,
+                                            //           fit: BoxFit.cover,
+                                            //         ),
+                                            //       ),
+                                            //     ),
+                                            //   );
+                                          });
+                                          Navigator.pop(context);
+                                          Widget widget =
+                                              Image.network(temController.text);
+                                          // contentPreView.add(widget);
+                                          contentPreView.add(widget);
+                                        },
+                                        child: const Text("Ok"),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  )
                 ],
               ),
             ),

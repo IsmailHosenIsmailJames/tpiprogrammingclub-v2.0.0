@@ -1,5 +1,8 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tpiprogrammingclub/auth/init_state.dart';
+import 'package:tpiprogrammingclub/core/show_toast.dart';
 import 'package:tpiprogrammingclub/theme/my_colors_icons.dart';
 
 import '../../theme/change_button_theme.dart';
@@ -18,9 +21,32 @@ class _LogInState extends State<LogIn> {
   TextEditingController password = TextEditingController();
   final validationKey = GlobalKey<FormState>();
 
-  void logIn() async {
+  Widget loginButtonAndProgressWidget =
+      const Text("LogIn", style: TextStyle(fontSize: 26));
+
+  void logIn(String email, String password) async {
     if (validationKey.currentState!.validate()) {
       // TO DO
+      setState(() {
+        loginButtonAndProgressWidget = const CircularProgressIndicator(
+          color: Colors.white,
+        );
+      });
+
+      try {
+        await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password);
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const InItState(),
+        ));
+      } catch (e) {
+        showToast(e.toString());
+        setState(() {
+          loginButtonAndProgressWidget =
+              const Text("LogIn", style: TextStyle(fontSize: 26));
+        });
+      }
     }
   }
 
@@ -86,7 +112,7 @@ class _LogInState extends State<LogIn> {
                             if (EmailValidator.validate(value!)) {
                               return null;
                             } else {
-                              return "আপনার ইমেইলটি সঠিক নয় ...";
+                              return "Your email is not correct...";
                             }
                           },
                           controller: email,
@@ -97,7 +123,7 @@ class _LogInState extends State<LogIn> {
                               borderSide: const BorderSide(width: 3),
                             ),
                             labelText: "Email",
-                            hintText: "আপনার ইমেইলটি এখানে লিখুন ...",
+                            hintText: "Type our email here...",
                           ),
                         ),
                         const SizedBox(
@@ -105,7 +131,7 @@ class _LogInState extends State<LogIn> {
                         ),
                         TextFormField(
                           onEditingComplete: () {
-                            logIn();
+                            logIn(email.text, password.text);
                           },
                           validator: (value) {
                             if (value!.length >= 8) {
@@ -130,22 +156,18 @@ class _LogInState extends State<LogIn> {
                           height: 15,
                         ),
                         ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              maximumSize: const Size(380, 50),
+                              minimumSize: const Size(380, 50),
+                              backgroundColor: MyColorsIcons.gradient2,
                             ),
-                            maximumSize: const Size(380, 50),
-                            minimumSize: const Size(380, 50),
-                            backgroundColor: MyColorsIcons.gradient2,
-                          ),
-                          onPressed: () {
-                            logIn();
-                          },
-                          child: const Text(
-                            "LogIn",
-                            style: TextStyle(fontSize: 26),
-                          ),
-                        ),
+                            onPressed: () {
+                              logIn(email.text, password.text);
+                            },
+                            child: loginButtonAndProgressWidget),
                         const SizedBox(
                           height: 15,
                         ),

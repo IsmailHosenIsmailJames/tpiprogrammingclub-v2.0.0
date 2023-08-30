@@ -37,34 +37,39 @@ class _SignInState extends State<SignUp> {
   Uint8List? picForWeb;
   Widget profileAvatar = const Icon(Icons.person, size: 80);
 
+  Widget signInButtonAndProgressWidget = const Text("SignIn");
+
   void signUp() async {
     if (formKey.currentState!.validate()) {
-      showModalBottomSheet(
-        context: context,
-        builder: (context) => const Center(
-          child: CircularProgressIndicator(
-            color: MyColorsIcons.gradient2,
-          ),
-        ),
-      );
-      await createUser(emailController.text.trim(), passController.text);
-      await sentUserDataServer(
-        emailController.text.trim(),
-        nameController.text.trim(),
-        url == null ? "" : url!,
-      );
-      await sentValidationEmail();
-      // ignore: use_build_context_synchronously
-      if (Navigator.canPop(context)) {
+      setState(() {
+        signInButtonAndProgressWidget = const CircularProgressIndicator(
+          color: Colors.white,
+        );
+      });
+      try {
+        await createUser(emailController.text.trim(), passController.text);
+        await sentUserDataServer(
+          emailController.text.trim(),
+          nameController.text.trim(),
+          url == null ? "" : url!,
+        );
+        await sentValidationEmail();
+
+        setState(() {
+          signInButtonAndProgressWidget = const Text("SignIn");
+        });
         // ignore: use_build_context_synchronously
-        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const InItState(),
+            ));
+      } catch (e) {
+        showToast(e.toString());
+        setState(() {
+          signInButtonAndProgressWidget = const Text("SignIn");
+        });
       }
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const InItState(),
-        ),
-      );
     }
   }
 
@@ -375,9 +380,7 @@ class _SignInState extends State<SignUp> {
                           onPressed: () async {
                             signUp();
                           },
-                          child: const Text(
-                            "SignIn",
-                          ),
+                          child: signInButtonAndProgressWidget,
                         ),
                         const SizedBox(
                           height: 20,

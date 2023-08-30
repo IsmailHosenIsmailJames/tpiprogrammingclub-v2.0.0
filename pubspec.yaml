@@ -82,6 +82,7 @@ flutter:
   assets:
     - img/googleLogo.jpg
     - img/logotpi.jpg
+    - img/linkedImg.png
   #   - images/a_dot_ham.jpeg
 
 flutter_icons:
